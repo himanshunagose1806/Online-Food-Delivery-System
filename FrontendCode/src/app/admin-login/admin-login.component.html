@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+
+<div class="login-background">
+    <div class="login-container">
+        <h2>Admin Login</h2>
+
+        <form [formGroup]="restLoginForm" (ngSubmit)="onLoginSuccess()">
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email" placeholder="Enter admin email" />
+                <div class="error"
+                    *ngIf="restLoginForm.get('email')?.hasError('required') && restLoginForm.get('email')?.touched">
+                    Email is required.
+                </div>
+                <div class="error"
+                    *ngIf="restLoginForm.get('email')?.hasError('email') && restLoginForm.get('email')?.touched">
+                    Enter a valid email.
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+                        placeholder="Enter password" />
+                    <!-- Eye icon -->
+                    <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                        (click)="togglePasswordVisibility()"></i>
+                </div>
+                <div class="error"
+                    *ngIf="restLoginForm.get('password')?.hasError('required') && restLoginForm.get('password')?.touched">
+                    Password is required.
+                </div>
+                <div class="error"
+                    *ngIf="restLoginForm.get('password')?.hasError('minlength') && restLoginForm.get('password')?.touched">
+                    Password must be at least 6 characters.
+                </div>
+            </div>
+
+            <!-- Authentication error -->
+            <p class="error" *ngIf="message && message !== 'Login successful!'">{{ message }}</p>
+
+            <!-- Success notification -->
+            <div class="success-box" *ngIf="loginSuccess">
+                🎉 {{ message }}
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" [disabled]="restLoginForm.invalid">Login</button>
+        </form>
+    </div>
+</div>
+
+
+<app-footer></app-footer>
